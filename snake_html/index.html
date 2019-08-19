@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Snake</title>
+    <style>
+        main {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .game {
+            display: block;
+            box-sizing: border-box;
+            width: 500px;
+            margin: auto;
+            height: 500px;
+            border: red 1px solid;
+        }
+
+        .block {
+            box-sizing: border-box;
+            border: 1px solid black;
+            display: inline-block;
+            width: 10%;
+            height: 100%;
+        }
+
+        .row{
+            display: block;
+            width: 100%;
+            height: 10%;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="game" id="game"></div>
+    </main>
+    <script>
+        class Game {
+            constructor(game_id) {
+                this.game_board_obj = document.getElementById(game_id);
+                this.game_board = new Array(10).fill(new Array(10).fill('O'));
+                // let debug_board = new Array(1).fill(new Array(10).fill('O'));
+                // console.log(this.game_board);
+                this.drawBoard(this.game_board);
+            }
+            drawBoard(array_to_draw){
+                for(let row of array_to_draw){
+                    let row_dom = document.createElement('div');
+                    row_dom.classList.add('row');
+                    for(let block of row){
+                        let block_dom = document.createElement('div');
+                        block_dom.classList.add('block');
+                        row_dom.appendChild(block_dom);
+                    }
+                    this.game_board_obj.appendChild(row_dom);
+                }
+                console.log('Done Drawing');
+            }
+        }
+        let new_game = new Game('game');
+    </script>
+</body>
+
+</html>
