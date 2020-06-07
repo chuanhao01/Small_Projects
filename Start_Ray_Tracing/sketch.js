@@ -1,6 +1,7 @@
 let walls = [];
 let particle;
 const sceneW = 400, sceneH = 400;
+const fov = 60;
 
 function setup(){
     createCanvas(800, 400);
@@ -17,13 +18,41 @@ function setup(){
 
 function draw(){
     background(0);
+
+    if(keyIsDown(LEFT_ARROW)){
+        particle.rotate(-0.01);
+    }
+    if(keyIsDown(RIGHT_ARROW)){
+        particle.rotate(0.01);
+    }
+    // if(keyIsDown(LEFT_ARROW)){
+    //     particle.rotate(-0.1);
+    // }
+    // if(keyIsDown(LEFT_ARROW)){
+    //     particle.rotate(-0.1);
+    // }
+
     particle.updatePos(mouseX, mouseY);
     particle.show();
-    particle.look(walls);
+
+    // Drawing the rects for the fps
+    const scene = particle.look(walls);
+    push();
+    translate(sceneW, 0);
+    const w = sceneW / scene.length;
+    for(let i=0; i<scene.length; i++){
+        noStroke();
+        const brightness = map(scene[i], 0, sceneW, 255, 0);
+        const height = map(scene[i], 0, sceneW, sceneH, 0)
+        fill(brightness);
+        rectMode(CENTER);
+        rect(i * w + w / 2, sceneH / 2, w, height);
+    }
+    pop();
+
     for(let wall of walls){
         wall.show();
     }
-
     line(sceneW, 0, sceneW, sceneH);
 
     // let pt = ray.cast(wall);

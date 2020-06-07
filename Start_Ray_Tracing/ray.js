@@ -2,6 +2,7 @@ class Ray {
     constructor(pos, angle){
         this.pos = pos;
         this.dir = p5.Vector.fromAngle(angle);
+        this.angle = angle;
     }
     show(){
         stroke(255);
@@ -14,6 +15,9 @@ class Ray {
         this.dir.x = x - this.pos.x;
         this.dir.y = y - this.pos.y;
         this.dir.normalize();
+    }
+    setAngle(angle){
+        this.dir = p5.Vector.fromAngle(angle);
     }
     /**
      * 

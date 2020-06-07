@@ -2,7 +2,8 @@ class Particle{
     constructor(){
         this.pos = createVector(width/2, height/2);
         this.rays = [];
-        for(let i=0; i<=360; i+=10){
+        this.heading = 0;
+        for(let i= -Math.floor(fov/2); i<=Math.floor(fov/2); i+=1){
             this.rays.push(new Ray(this.pos, radians(i)));
         }
     }
@@ -13,11 +14,19 @@ class Particle{
             ray.show();
         }
     }
+    rotate(angle){
+        this.heading += angle;
+        for(let ray of this.rays){
+            ray.setAngle(ray.angle + this.heading);
+        }
+        console.log(this.rays);
+    }
     updatePos(x, y){
         this.pos.x = x;
         this.pos.y = y;
     }
     look(walls){
+        let scene = [];
         for(let ray of this.rays){
             let shorest_distance = Infinity, closest = null;
             for(let wall of walls){
@@ -31,9 +40,11 @@ class Particle{
                 }
             }
             if(closest){
-                stroke(255);
+                stroke(255, 100);
                 line(this.pos.x, this.pos.y, closest.x, closest.y);
             }
+            scene.push(shorest_distance);
         }
+        return scene;
     }
 }
